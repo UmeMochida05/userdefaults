@@ -18,36 +18,38 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadDate()
-       
+        loadSavedDate()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        loadSavedDate()
+    }
+    
+    func loadSavedDate() {
+        if let savedFruits = userdefaults.string(forKey: "fruits") {
+            fruitstextfield.text = savedFruits
+            print("Fruits: \(savedFruits)")
+        }
+        
+        if let savedVegetables = userdefaults.string(forKey: "vegetables") {
+            vegetabletextfield.text = savedVegetables
+            print("Vegetables: \(savedVegetables)")
+        }
     }
     
     @IBAction func saveButtonTapped(_ sender: Any) {
         if let fruits = fruitstextfield.text, let vegetables = vegetabletextfield.text {
-            userdefaults.set(fruits, forKey: "fruits")
-            userdefaults.set(vegetables, forKey: "vegetables")
+            UserDefaults.standard.set(fruits, forKey: "fruits")
+            UserDefaults.standard.set(vegetables, forKey: "vegetables")
             print("Fruits: \(fruits)")
             print("Vegetables: \(vegetables)")
            
         }
     }
     
-    func loadDate() {
-        if let fruits = userdefaults.string(forKey: "fruits") {
-            fruitstextfield.text = fruits
-            print("Fruits: \(fruits)")
-        }
-        if let vegetables = userdefaults.string(forKey: "vegetables") {
-            vegetabletextfield.text = vegetables
-            print("Vegetables: \(vegetables)")
-        }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        loadDate()
-    }
+   
 
 }
 
